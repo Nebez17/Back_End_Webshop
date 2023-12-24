@@ -14,13 +14,12 @@ public class Category {
     private UUID id;
     @Column(unique = true)
     private String name;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL )
     @JoinTable(
             joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private Set<Product> products;
-
 
     public Category(String name, Set<Product> products) {
         this.name = name;

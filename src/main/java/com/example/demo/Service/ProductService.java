@@ -31,7 +31,7 @@ public class ProductService {
         return productRepository.save(product);
     }
     public List<Product> findAllProducts(){
-        return productRepository.findAllProductsOrderedByProductName();
+        return productRepository.getProductsWithCategories();
     }
     public Product findProductById(UUID id){
         return productRepository.findProductById(id)

@@ -17,8 +17,8 @@ public class Product {
     private long price;
     private String imageURL;
     private long stock;
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "products")
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL ,mappedBy = "products")
     private Set<Category> category;
 
 
