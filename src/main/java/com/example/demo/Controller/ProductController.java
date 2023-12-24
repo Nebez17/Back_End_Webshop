@@ -42,6 +42,12 @@ public class ProductController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
+    @GetMapping("/products")
+    public ResponseEntity<List<Product>> getProductsByCategoryId(@RequestParam UUID categoryId) {
+        System.out.println("Category ID received: " + categoryId);
+        List<Product> products = productService.findProductsByCategoryId(categoryId);
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById (@PathVariable("id") UUID id){
         Product product= productService.findProductById(id);

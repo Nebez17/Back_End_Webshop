@@ -18,7 +18,12 @@ public class Product {
     private String imageURL;
     private long stock;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL ,mappedBy = "products")
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+    @JoinTable(
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
     private Set<Category> category;
 
 

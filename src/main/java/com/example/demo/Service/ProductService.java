@@ -37,6 +37,12 @@ public class ProductService {
         return productRepository.findProductById(id)
                 .orElseThrow(() -> new NotFoundException("User by id " + id + "was not found"));
     }
+
+    public List<Product> findProductsByCategoryId(UUID categoryId) {
+        return productRepository.findByCategory_Id(categoryId);
+    }
+
+
     public void deleteProduct(UUID id){
         productRepository.deleteProductById(id);
     }

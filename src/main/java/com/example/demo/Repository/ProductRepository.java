@@ -21,4 +21,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> getProductsWithCategories();
 
     Optional<Product> findProductById(UUID id);
+
+//    @Query("SELECT DISTINCT p FROM Product p LEFT JOIN FETCH p.category")
+    List<Product> findByCategory_Id(UUID categoryId);
+
+
 }
