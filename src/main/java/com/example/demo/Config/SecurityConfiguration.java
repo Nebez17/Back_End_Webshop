@@ -30,7 +30,6 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/**").permitAll()
-// TODO tijdelijk de beveiliging uitgezet
                         .requestMatchers("/auth/**", "/error").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))

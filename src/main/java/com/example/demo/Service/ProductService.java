@@ -47,8 +47,9 @@ public class ProductService {
         productRepository.deleteProductById(id);
     }
 
-    public Product createProduct(ProductDto productDto){
 
+
+    public Product createProduct(ProductDto productDto){
         Product product = new Product();
         product.setDescription(productDto.getDescription());
         product.setProductName(productDto.getProductName());
@@ -63,6 +64,7 @@ public class ProductService {
 
     public Product updateProduct(UUID id, Product updatedProduct) {
         // Retrieve the existing product from the database
+
         Product existingProduct = productRepository.findProductById(id)
                 .orElseThrow(() -> new NotFoundException("Product not found with id: " + id));
 

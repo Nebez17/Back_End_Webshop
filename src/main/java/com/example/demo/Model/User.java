@@ -33,13 +33,8 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
     private String password;
-
     @Enumerated(EnumType.STRING)
     private Role role;
-
-
-
-
 
     public UUID getId() {
         return id;
@@ -48,7 +43,6 @@ public class User implements UserDetails {
     public void setId(UUID id) {
         this.id = id;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

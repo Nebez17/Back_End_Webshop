@@ -3,6 +3,7 @@ package com.example.demo.Controller;
 import com.example.demo.Model.Product;
 import com.example.demo.Model.dto.ProductDto;
 import com.example.demo.Service.ProductService;
+import com.example.demo.Service.Security.AdminSecurity;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,15 +28,15 @@ public class ProductController {
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
+    @AdminSecurity
     @PostMapping
     public ResponseEntity<Product> addProduct(@Valid @RequestBody ProductDto productDto) {
 
        Product createdProduct = productService.createProduct(productDto);
-
-
         return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     }
 
+    @AdminSecurity
     @GetMapping()
     public ResponseEntity<List<Product>> getAllProducts(){
         List<Product> products = productService.findAllProducts();
