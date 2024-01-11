@@ -1,6 +1,8 @@
 package com.example.demo.Model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.util.Set;
 import java.util.UUID;
@@ -10,6 +12,8 @@ import java.util.UUID;
 public class Product {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Id
+    @SQLDelete(sql = "UPDATE table_product SET deleted = true WHERE id=?")
+    @Where(clause = "deleted=false")
     @Column(nullable = false, updatable = false)
     private UUID id;
     private String description;
@@ -18,8 +22,10 @@ public class Product {
     private String imageURL;
     private long stock;
 
+    private boolean deleted = Boolean.FALSE;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH )
     @JoinTable(
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")

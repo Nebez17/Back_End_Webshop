@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/product")
 public class ProductController {
     private final ProductService productService;
@@ -28,7 +29,7 @@ public class ProductController {
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
-    @AdminSecurity
+
     @PostMapping
     public ResponseEntity<Product> addProduct(@Valid @RequestBody ProductDto productDto) {
 
@@ -36,19 +37,24 @@ public class ProductController {
         return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     }
 
-    @AdminSecurity
+//    @AdminSecurity
+//    @GetMapping()
+//    public ResponseEntity<List<Product>> getAllProducts(){
+//        List<Product> products = productService.findAllProducts();
+//        return new ResponseEntity<>(products, HttpStatus.OK);
+//    }
+
     @GetMapping()
-    public ResponseEntity<List<Product>> getAllProducts(){
-        List<Product> products = productService.findAllProducts();
-        return new ResponseEntity<>(products, HttpStatus.OK);
+    public ResponseEntity<List<Product>> getProductsByCategoryId(@RequestParam(name = "categoryId", required = false) UUID categoryId) {
+        if (categoryId != null) {
+            List<Product> products = productService.findProductsByCategoryId(categoryId);
+            return new ResponseEntity<>(products, HttpStatus.OK);
+        } else {
+            List<Product> allProducts = productService.findAllProducts();
+            return new ResponseEntity<>(allProducts, HttpStatus.OK);
+        }
     }
 
-    @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProductsByCategoryId(@RequestParam UUID categoryId) {
-        System.out.println("Category ID received: " + categoryId);
-        List<Product> products = productService.findProductsByCategoryId(categoryId);
-        return new ResponseEntity<>(products, HttpStatus.OK);
-    }
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById (@PathVariable("id") UUID id){
         Product product= productService.findProductById(id);
@@ -61,9 +67,8 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable("id") UUID id, @RequestBody Product updatedProduct) {
+    public ResponseEntity<Product> updateProduct(@PathVariable("id") UUID id, @RequestBody ProductDto updatedProduct) {
         Product updated = productService.updateProduct(id, updatedProduct);
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }
-
 }
