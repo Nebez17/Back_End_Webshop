@@ -64,14 +64,11 @@ public class ProductService {
         // Retrieve the existing product from the database
         Product existingProduct = productRepository.findProductById(id)
                 .orElseThrow(() -> new NotFoundException("Product not found with id: " + id));
-
-        // Update the fields of the existing product with the values from the DTO
         existingProduct.setDescription(productDto.getDescription());
         existingProduct.setProductName(productDto.getProductName());
         existingProduct.setPrice(productDto.getPrice());
         existingProduct.setStock(productDto.getStock());
         existingProduct.setImageURL(productDto.getImageURL());
-
         Set<Category> categories = categoryService.getCategoriesByNames(productDto.getCategory());
         existingProduct.setCategory(categories);
 

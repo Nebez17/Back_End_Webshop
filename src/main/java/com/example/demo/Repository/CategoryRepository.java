@@ -16,5 +16,8 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Transactional
     void deleteProductById(UUID id);
 
+    @Query("SELECT e FROM Category e ORDER BY e.name")
+    List<Category> findAllCategoriesOrderedByName();
+
 
 }

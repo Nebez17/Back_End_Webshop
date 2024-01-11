@@ -22,7 +22,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Optional<Product> findProductById(UUID id);
 
-//    @Query("SELECT DISTINCT p FROM Product p LEFT JOIN FETCH p.category")
+
     List<Product> findByCategory_Id(UUID categoryId);
 
 

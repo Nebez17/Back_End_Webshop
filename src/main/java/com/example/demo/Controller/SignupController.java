@@ -18,6 +18,7 @@ public class SignupController {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public UserResult signup(@RequestBody @Valid SignUpRequest request) {
+
         return UserResult.create(signupService.signup(request));
     }
 

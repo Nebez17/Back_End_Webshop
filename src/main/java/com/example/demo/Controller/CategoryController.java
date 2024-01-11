@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Model.Category;
+import com.example.demo.Model.Order;
 import com.example.demo.Model.Product;
 import com.example.demo.Service.CategoryService;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,11 @@ public class CategoryController {
     public ResponseEntity<Category> getCategoryByName (@PathVariable("name") String name){
         Category category= categoryService.findCategoryByName(name);
         return new ResponseEntity<>(category, HttpStatus.OK);
+    }
+    @GetMapping()
+    public ResponseEntity<List<Category>> getAllCategories(){
+        List<Category> categories = categoryService.findAllCategories();
+        return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
 }

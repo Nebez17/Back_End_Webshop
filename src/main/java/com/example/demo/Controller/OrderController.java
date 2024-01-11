@@ -1,10 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Model.Order;
-import com.example.demo.Model.Product;
-import com.example.demo.Model.dto.ProductDto;
 import com.example.demo.Service.OrderService;
-import com.example.demo.Service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,14 +20,14 @@ public class OrderController {
     }
 
     @PostMapping()
-    public ResponseEntity<Order> addProduct(@Valid @RequestBody Order order) {
+    public ResponseEntity<Order> addOrder(@Valid @RequestBody Order order) {
         Order newOrder = orderService.addOrder(order);
         return new ResponseEntity<>(newOrder, HttpStatus.CREATED);
     }
 
     @GetMapping()
-    public ResponseEntity<List<Order>> getAllProducts(){
-        List<Order> orders = orderService.findAllProducts();
+    public ResponseEntity<List<Order>> getAllOrders(){
+        List<Order> orders = orderService.findAllOrders();
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 }

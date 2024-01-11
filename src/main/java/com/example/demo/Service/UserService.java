@@ -1,7 +1,13 @@
 package com.example.demo.Service;
 
 import com.example.demo.Exeptions.NotFoundException;
+import com.example.demo.Model.Category;
+import com.example.demo.Model.Product;
+import com.example.demo.Model.Role;
 import com.example.demo.Model.User;
+import com.example.demo.Model.dto.ProductDto;
+import com.example.demo.Model.dto.SignUpRequest;
+import com.example.demo.Model.dto.UpdateUserDto;
 import com.example.demo.Repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -12,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -26,16 +33,6 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    public void delete(long id) throws NotFoundException {
-        Optional<User> optionalUser = this.userRepository.findById(id);
-
-        if(optionalUser.isEmpty()){
-            throw new NotFoundException("User with id: " + id + " not found");
-        }
-
-        User user = optionalUser.get();
-        this.userRepository.delete(user);
-    }
 
 
     public List<User> findAll() {
@@ -45,4 +42,19 @@ public class UserService implements UserDetailsService {
     public void deleteUser(UUID id){
         userRepository.deleteUserById(id);
     }
+
+
+    public User updateUser(String email, UpdateUserDto request) {
+        User existingUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Product not found with id: " + email));
+            existingUser.setFirstName(request.getFirstName());
+            existingUser.setLastName(request.getLastName());
+            existingUser.setAdres(request.getAdres());
+            existingUser.setPostcode(request.getPostcode());
+            existingUser.setPhone(request.getPhone());
+            existingUser.setEmail(request.getEmail());
+            existingUser.setRole(request.isAdminRole() ? Role.ADMIN : Role.CUSTOMER);
+            return userRepository.save(existingUser);
+        };
+
 }
