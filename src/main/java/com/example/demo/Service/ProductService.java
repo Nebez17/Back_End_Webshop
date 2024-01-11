@@ -47,35 +47,34 @@ public class ProductService {
         productRepository.deleteProductById(id);
     }
 
+        public Product createProduct(ProductDto productDto){
+            Product product = new Product();
+            product.setDescription(productDto.getDescription());
+            product.setProductName(productDto.getProductName());
+            product.setPrice(productDto.getPrice());
+            product.setStock(productDto.getStock());
+            product.setImageURL(productDto.getImageURL());
+            Set<Category> catogires = categoryService.getCategoriesByNames(productDto.getCategory());
+            product.setCategory(catogires);
+            return productRepository.save(product);
+        }
 
 
-    public Product createProduct(ProductDto productDto){
-        Product product = new Product();
-        product.setDescription(productDto.getDescription());
-        product.setProductName(productDto.getProductName());
-        product.setPrice(productDto.getPrice());
-        product.setStock(productDto.getStock());
-        product.setImageURL(productDto.getImageURL());
-        Set<Category> catogires = categoryService.getCategoriesByNames(productDto.getCategory());
-        product.setCategory(catogires);
-        return productRepository.save(product);
-    }
-
-
-    public Product updateProduct(UUID id, Product updatedProduct) {
+    public Product updateProduct(UUID id, ProductDto productDto) {
         // Retrieve the existing product from the database
-
         Product existingProduct = productRepository.findProductById(id)
                 .orElseThrow(() -> new NotFoundException("Product not found with id: " + id));
 
-        // Update the fields of the existing product with the values from the updated product
-        existingProduct.setDescription(updatedProduct.getDescription());
-        existingProduct.setProductName(updatedProduct.getProductName());
-        existingProduct.setPrice(updatedProduct.getPrice());
-        existingProduct.setImageURL(updatedProduct.getImageURL());
-        existingProduct.setCategory(updatedProduct.getCategory());
+        // Update the fields of the existing product with the values from the DTO
+        existingProduct.setDescription(productDto.getDescription());
+        existingProduct.setProductName(productDto.getProductName());
+        existingProduct.setPrice(productDto.getPrice());
+        existingProduct.setStock(productDto.getStock());
+        existingProduct.setImageURL(productDto.getImageURL());
 
-        // Save the updated product
+        Set<Category> categories = categoryService.getCategoriesByNames(productDto.getCategory());
+        existingProduct.setCategory(categories);
+
         return productRepository.save(existingProduct);
     }
-}
+    }

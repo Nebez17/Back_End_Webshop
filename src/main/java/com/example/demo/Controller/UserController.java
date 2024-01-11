@@ -3,12 +3,12 @@ package com.example.demo.Controller;
 import com.example.demo.Model.dto.UserResult;
 import com.example.demo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -16,16 +16,18 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable Long id){
-        this.userService.delete(id);
-    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<UserResult> findAll(){
         return this.userService.findAll().stream()
                 .map(UserResult::create)
                 .toList();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable("id") UUID id){
+        userService.deleteUser(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

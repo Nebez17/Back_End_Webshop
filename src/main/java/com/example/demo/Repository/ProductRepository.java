@@ -13,9 +13,9 @@ import java.util.UUID;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     @Transactional
     void deleteProductById(UUID id);
+
     @Query("SELECT e FROM Product e ORDER BY e.productName")
     List<Product> findAllProductsOrderedByProductName();
-
 
     @Query("SELECT DISTINCT p FROM Product p LEFT JOIN FETCH p.category")
     List<Product> getProductsWithCategories();
