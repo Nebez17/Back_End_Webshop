@@ -47,17 +47,17 @@ public class ProductService {
         productRepository.deleteProductById(id);
     }
 
-        public Product createProduct(ProductDto productDto){
-            Product product = new Product();
-            product.setDescription(productDto.getDescription());
-            product.setProductName(productDto.getProductName());
-            product.setPrice(productDto.getPrice());
-            product.setStock(productDto.getStock());
-            product.setImageURL(productDto.getImageURL());
-            Set<Category> catogires = categoryService.getCategoriesByNames(productDto.getCategory());
-            product.setCategory(catogires);
-            return productRepository.save(product);
-        }
+    public Product createProduct(ProductDto productDto){
+        Product product = new Product();
+        product.setDescription(productDto.getDescription());
+        product.setProductName(productDto.getProductName());
+        product.setPrice(productDto.getPrice());
+        product.setStock(productDto.getStock());
+        product.setImageURL(productDto.getImageURL());
+        Set<Category> catogires = categoryService.getCategoriesByNames(productDto.getCategory());
+        product.setCategory(catogires);
+        return productRepository.save(product);
+    }
 
 
     public Product updateProduct(UUID id, ProductDto productDto) {

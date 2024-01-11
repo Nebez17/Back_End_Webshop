@@ -14,7 +14,7 @@ import java.util.UUID;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     Optional<Category> findCategoriesByName(String name);
     @Transactional
-    void deleteProductById(UUID id);
+    void deleteCategoryById(UUID id);
 
     @Query("SELECT e FROM Category e ORDER BY e.name")
     List<Category> findAllCategoriesOrderedByName();
