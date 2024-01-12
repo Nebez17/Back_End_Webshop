@@ -44,9 +44,9 @@ public class CategoryController {
         Category createdCategory = categoryService.createCategory(categoryDto);
         return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
     }
-    @PutMapping("/{name}")
-    public ResponseEntity<Category> updateCategory(@PathVariable("name") String name, @RequestBody CategoryDto categoryDto) {
-        Category updated = categoryService.updateCategory(name, categoryDto);
+    @PutMapping("/{id}")
+    public ResponseEntity<Category> updateCategory(@PathVariable("id") UUID id, @RequestBody CategoryDto categoryDto) {
+        Category updated = categoryService.updateCategory(id, categoryDto);
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 

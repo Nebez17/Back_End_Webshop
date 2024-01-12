@@ -41,13 +41,12 @@ public class CategoryService {
     public void deleteCategory(UUID id){
         categoryRepository.deleteCategoryById(id);
     }
-    public Category updateCategory(String name, CategoryDto categoryDto) {
-        Category existingCategory = categoryRepository.findCategoriesByName(name)
-                .orElseThrow(() -> new NotFoundException("Product not found with id: " + name));
+    public Category updateCategory(UUID id, CategoryDto categoryDto) {
+        Category existingCategory = categoryRepository.findCategorieById(id)
+                .orElseThrow(() -> new NotFoundException("Category not found with id: " + id));
         existingCategory.setName(categoryDto.getName());
         return categoryRepository.save(existingCategory);
     }
-
     public Category createCategory(CategoryDto categoryDto){
         Category category = new Category();
         category.setName(categoryDto.getName());
