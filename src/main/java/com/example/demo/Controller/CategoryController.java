@@ -6,6 +6,7 @@ import com.example.demo.Model.Product;
 import com.example.demo.Model.dto.CategoryDto;
 import com.example.demo.Model.dto.ProductDto;
 import com.example.demo.Service.CategoryService;
+import com.example.demo.Service.Security.AdminSecurity;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,16 +35,19 @@ public class CategoryController {
         List<Category> categories = categoryService.findAllCategories();
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
+    @AdminSecurity
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable("id") UUID id){
         categoryService.deleteCategory(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @AdminSecurity
     @PostMapping
     public ResponseEntity<Category> addCategory(@Valid @RequestBody CategoryDto categoryDto) {
         Category createdCategory = categoryService.createCategory(categoryDto);
         return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
     }
+    @AdminSecurity
     @PutMapping("/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable("id") UUID id, @RequestBody CategoryDto categoryDto) {
         Category updated = categoryService.updateCategory(id, categoryDto);

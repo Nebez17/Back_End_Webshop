@@ -5,6 +5,7 @@ import com.example.demo.Model.User;
 import com.example.demo.Model.dto.ProductDto;
 import com.example.demo.Model.dto.UpdateUserDto;
 import com.example.demo.Model.dto.UserResult;
+import com.example.demo.Service.Security.AdminSecurity;
 import com.example.demo.Service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +23,20 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
+    @AdminSecurity
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<UserResult> findAll(){
         return this.userService.findAll().stream()
                 .map(UserResult::create)
                 .toList();
     }
-
+    @AdminSecurity
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable("id") UUID id){
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @AdminSecurity
     @PutMapping("/{email}")
     public ResponseEntity<User> updateUser(@Valid @PathVariable("email") String email, @RequestBody UpdateUserDto updateUserDto) {
         User updated = userService.updateUser(email, updateUserDto);

@@ -30,6 +30,7 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @AdminSecurity
     @PostMapping
     public ResponseEntity<Product> addProduct(@Valid @RequestBody ProductDto productDto) {
 
@@ -60,12 +61,13 @@ public class ProductController {
         Product product= productService.findProductById(id);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
-
+    @AdminSecurity
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable("id") UUID id){
         productService.deleteProduct(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @AdminSecurity
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable("id") UUID id, @RequestBody ProductDto updatedProduct) {
         Product updated = productService.updateProduct(id, updatedProduct);
